@@ -19,6 +19,12 @@ class mainTests(unittest.TestCase):
             raise AssertionError("La clase Aplicacion no esta definida")
         return True
 
+    def test_mostrarAplicacion(self):
+        self.aplicacion =  AplicacionPrincipal()  
+        ventanas = AplicacionPrincipal.mostrarAplicacion(self.aplicacion)
+        return isinstance(ventanas[0],tk.Tk)
+        
+
     def test_mostrarCalculadora(self):
         self.aplicacion =  AplicacionPrincipal()  
         ventanaCalculadora = AplicacionPrincipal.mostrarCalculadora(self.aplicacion)
