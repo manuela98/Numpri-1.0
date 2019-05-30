@@ -120,8 +120,8 @@ class NumpriTests(unittest.TestCase):
         self.conceptos = Conceptos()  
         botones = ['botonPrueba']
         ventanaConceptos = Conceptos.crearNuevaVentana(self.conceptos,"#E9B872")
-        comandoOpcion = partial(conceptos.crearMenuTitulos,lista)
-        menu = conceptos.crearMenu(ventanaConceptos,botones,[comandoOpcion])
+        comandoOpcion = partial(Conceptos.crearMenuTitulos,botones)
+        menu = Conceptos.crearMenu(self.conceptos,ventanaConceptos,botones,[comandoOpcion])
         return isinstance(menu[0],tk.Button)
     
     
