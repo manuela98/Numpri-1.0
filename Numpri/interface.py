@@ -144,5 +144,5 @@ class  Conceptos(Aplicacion):
         for opcion in range(len(titulosOpciones)):
             comandoOpcion = partial(Aplicacion.insertarImagen,self,ventanaOpcion,"../Img/calculadora.ppm")
             accionesTitulos = [comandoOpcion,comandoOpcion]
-            Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=accionesTitulos[opcion])
-       return 0
+            boton = Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=accionesTitulos[opcion])
+       return boton
