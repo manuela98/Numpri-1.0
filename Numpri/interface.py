@@ -145,29 +145,4 @@ class  Conceptos(Aplicacion):
             comandoOpcion = partial(Aplicacion.insertarImagen,self,ventanaOpcion,"../Img/calculadora.ppm")
             accionesTitulos = [comandoOpcion,comandoOpcion]
             Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=accionesTitulos[opcion])
-       
-
-       
-           
-        
-     
-
-
-
-
- 
-
-  
-
-    
-     
-    
-            
-    
-        
-
-
-
-
-  
-
+       return 0
