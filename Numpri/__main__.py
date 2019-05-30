@@ -27,6 +27,7 @@ class AplicacionPrincipal(object):
         calculadora.activarCalcularNprimos]
         calculadora.insertarImagen(ventanaCalculadora,nombreImagen="Img/calculadora.ppm")
         calculadora.crearMenu(ventanaCalculadora,botonesCalculadora,comandosCalculadora)
+        return ventanaCalculadora
 
     def mostrarConceptos(self):
         conceptos = interface.Conceptos()
@@ -36,9 +37,11 @@ class AplicacionPrincipal(object):
         comandoOpcion = partial(conceptos.crearMenuTitulos,lista)
         comandosConceptos = [comandoOpcion,comandoOpcion]
         conceptos.crearMenu(ventanaConceptos,botonesConceptos,comandosConceptos)
+        return ventanaConceptos
 
-numrpiAplicacion = AplicacionPrincipal()
-numrpiAplicacion.mostrarAplicacion()
+if __name__=="__main__":
+   numpriAplicacion = AplicacionPrincipal()
+   numpriAplicacion.mostrarAplicacion()
 
 
 
