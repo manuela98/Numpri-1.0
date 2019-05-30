@@ -140,9 +140,9 @@ class  Conceptos(Aplicacion):
     def crearMenuTitulos(self,titulosOpciones):
         self.titulosOpciones = titulosOpciones
         ventanaOpcion = Aplicacion.crearNuevaVentana(self,"#F1E8B8")
-
+        self.Botones = []
         for opcion in range(len(titulosOpciones)):
-            comandoOpcion = partial(Aplicacion.insertarImagen,self,ventanaOpcion,"../Img/calculadora.ppm")
+            comandoOpcion = partial(Aplicacion.insertarImagen,self,ventanaOpcion,"Img/calculadora.ppm")
             accionesTitulos = [comandoOpcion,comandoOpcion]
-            boton = Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=accionesTitulos[opcion])
-       return boton
+            self.Botones += [Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=accionesTitulos[opcion])]
+        return self.Botones

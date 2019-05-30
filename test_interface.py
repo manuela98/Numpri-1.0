@@ -124,6 +124,11 @@ class NumpriTests(unittest.TestCase):
         menu = Conceptos.crearMenu(self.conceptos,ventanaConceptos,botones,[comandoOpcion])
         return isinstance(menu[0],tk.Button)
     
+    def test_crearTitulos(self):
+        self.conceptos = Conceptos()  
+        titulosOpciones = ['titulo prueba 1','titulo prueba 2']
+        botones = Conceptos.crearMenuTitulos(self.conceptos,titulosOpciones)
+        return isinstance(botones[0],tk.Button)
     
 if __name__=="__main__":
     unittest.NumpriTests()
