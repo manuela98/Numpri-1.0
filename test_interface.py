@@ -9,7 +9,7 @@ import tkinter as tk
 from PIL import Image,ImageTk
 import unittest
 from Numpri.interface import *  
-#from Numpri import primos 
+
 
 
 class NumpriTests(unittest.TestCase):
