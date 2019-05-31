@@ -5,10 +5,10 @@ Numpri es una interfaz gráfica que tiene como objetivo dar a conocer distintos 
 
 
 # Dependencias
-Python 3.6.5
-tkinter
-functools
-PIL
+Python 3.6.5  
+tkinter  
+functools  
+PIL  
 unittest
 
 # Descarga
