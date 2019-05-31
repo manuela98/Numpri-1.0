@@ -17,5 +17,6 @@ git clone https://github.com/manuela98/Numpri-1.0
 # Uso
 Ingrese a la carpeta del paquete Numpri-1.0 y ejecute:
 python3 -m Numpri
+A continuación se mostrará la interfaz
 
 
