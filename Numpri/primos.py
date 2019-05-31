@@ -36,6 +36,8 @@ class Primo(object):
         return numerosPrimos
         
     def calcularNprimos(self,n):
+        if n<1:
+           raise ValueError("Un numero primo debe ser Natural")
         numerosPrimos = []
         numero = 2
         while len(numerosPrimos) < n:

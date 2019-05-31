@@ -50,18 +50,21 @@ class Aplicacion(object):
        return self.boton
 
     def actualizarEntrada(self,cadenaEntrada):
-        print(cadenaEntrada.get()) 
         return cadenaEntrada.get() 
+
     def insertarEntrada(self,ventana,inicial):
 
        entrada = tk.StringVar(ventana)       
-       self.entradaTk = tk.Entry(ventana,textvariable=entrada)
-       
-       entrada.trace("w", lambda actualizar, index, mode,\
-       entrda=entrada:Aplicacion.actualizarEntrada(self,entrada))
+       self.entradaTk = tk.Entry(ventana,width=50,textvariable=entrada)
+       self.entradaTk.place(x=120,y=62)
        self.entradaTk.pack()
        entrada.set(inicial)
-       return entrada.get(),self.entradaTk
+       return entrada,self.entradaTk
+
+    def valorActualEntrada(self,variable):
+        variable.trace("w", lambda actualizar, index, mode,\
+        variable=variable:Aplicacion.actualizarEntrada(self,variable))
+        return variable
 
     def crearMenu(self,ventana,botones,comandos):
         self.Botones = []
@@ -81,49 +84,71 @@ class Aplicacion(object):
        self.canvasImagen.create_image(anchoImagen/2.,largoImagen/2.,\
        image=imagenTk) 
        self.canvasImagen.image = imagenTk
-       return self.canvasImagen 
-   
+       return self.canvasImagen
+    
+    def mostrarError(self,mensaje): 
+       self.ventanaError = tk.Tk()
+       self.ventanaError.title("Error")
+       self.ventanaError.geometry("350x100+540+284")
+       self.ventanaError.config(bg="#F1E8B8")
+       Texto = tk.Label(self.ventanaError,text=mensaje,font='Arial 10 bold', bg="white").place(x=15,y=20)
+       boton = tk.Button(self.ventanaError, text="Entendido!", command=self.ventanaError.destroy,\
+       background="#CE0000",font='Arial 11 bold').place(x=140,y=60)
+       return self.ventanaError
 
    
 
     
-
 
 
 class Calculadora(Aplicacion):
 
     def __init___(self):
-        self.valorEntrada = None 
+        self.valorEntrada =  tk.StringVar()
     
+    def entradaCalculadora(self,ventanaCalculadora,inicial):
+        self.valorEntrada = Aplicacion.insertarEntrada(self,ventanaCalculadora,inicial)[0] 
+        return self.valorEntrada
 
     def activarEsPrimo(self,ventanaCalculadora):
-        numeroInicial = '7'
         self.primo = primos.Primo()
-        self.valorEntrada = Aplicacion.insertarEntrada(self,ventanaCalculadora,numeroInicial)[0]
-        print(int(self.valorEntrada))
-        if primos.Primo.esPrimo(self.primo,int(self.valorEntrada))==True:
-           Aplicacion.mostrarRecuadroSalida(self,ventanaCalculadora,'El número  es primo')
-        else:
-           Aplicacion.mostrarRecuadroSalida(self,ventanaCalculadora,'El número no es primo')
-        return int(self.valorEntrada)
+        self.valorEntrada = Aplicacion.valorActualEntrada(self,self.valorEntrada)
+        try:
+            numero = int(self.valorEntrada.get())
+            if primos.Primo.esPrimo(self.primo,numero)==True:
+               Aplicacion.mostrarRecuadroSalida(self,ventanaCalculadora,'El número  es primo')
+            else:
+               Aplicacion.mostrarRecuadroSalida(self,ventanaCalculadora,'El número no es primo')
+            
+        except:
+             Aplicacion.mostrarError(self,'Debe Ingresar un número Natural. Ej : 7')
+                        
+        return self.valorEntrada.get()      
+            
 
     def activarPrimosIntervalo(self,ventanaCalculadora):
         self.primo = primos.Primo()
         self.calculadora = Calculadora()
-        intervaloInicial = '7,11'
-        self.valorEntrada = Aplicacion.insertarEntrada(self.calculadora,ventanaCalculadora,intervaloInicial)[0]
-        intervalo = str(self.valorEntrada).split(',')
-        numerosIntervalo = primos.Primo.calcularPrimos(self.primo,int(intervalo[0]),int(intervalo[1]))
-        Aplicacion.mostrarRecuadroSalida(self.calculadora,ventanaCalculadora,str(numerosIntervalo))
-        return intervalo
+        self.valorEntrada = Aplicacion.valorActualEntrada(self,self.valorEntrada)
+        try:
+            intervalo = str(self.valorEntrada.get()).split(',')
+            numerosIntervalo = primos.Primo.calcularPrimos(self.primo,int(intervalo[0]),int(intervalo[1]))
+            Aplicacion.mostrarRecuadroSalida(self.calculadora,ventanaCalculadora,str(numerosIntervalo))
+        except:
+             Aplicacion.mostrarError(self,'Debe Ingresar un intervalo. Ej : 2,17')
+
+        return  self.valorEntrada.get()
       
     def activarCalcularNprimos(self,ventanaCalculadora):
-       n = '6'
        self.primo = primos.Primo()
-       self.valorEntrada = Aplicacion.insertarEntrada(self,ventanaCalculadora,n)[0]
-       listaPrimos = primos.Primo.calcularNprimos(self.primo,int(self.valorEntrada))
-       Aplicacion.mostrarRecuadroSalida(self,ventanaCalculadora,str(listaPrimos))
-       return listaPrimos
+       self.valorEntrada = Aplicacion.valorActualEntrada(self,self.valorEntrada)
+       try:
+           numero = int(self.valorEntrada.get())
+           listaPrimos = primos.Primo.calcularNprimos(self.primo,numero)
+           Aplicacion.mostrarRecuadroSalida(self,ventanaCalculadora,str(listaPrimos))
+       except:
+           Aplicacion.mostrarError(self,'Debe Ingresar un número Natural. Ej : 7')
+       return  str(listaPrimos)
        
 class  Conceptos(Aplicacion):
 
@@ -142,7 +167,6 @@ class  Conceptos(Aplicacion):
         ventanaOpcion = Aplicacion.crearNuevaVentana(self,"#F1E8B8")
         self.Botones = []
         for opcion in range(len(titulosOpciones)):
-            comandoOpcion = partial(Aplicacion.insertarImagen,self,ventanaOpcion,"Img/calculadora.ppm")
-            accionesTitulos = [comandoOpcion,comandoOpcion]
-            self.Botones += [Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=accionesTitulos[opcion])]
+            comandoOpcion = partial(Aplicacion.insertarImagen,self,ventanaOpcion,"Img/"+titulosOpciones[opcion]+".ppm")
+            self.Botones += [Aplicacion.ponerBoton(self,ventanaOpcion,titulosOpciones[opcion],comando=comandoOpcion)]
         return self.Botones

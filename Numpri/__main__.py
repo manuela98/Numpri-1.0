@@ -12,30 +12,38 @@ class AplicacionPrincipal(object):
         aplicacion.ponerBoton(ventanaPrincipal,'Siguiente',comando=ventanaPrincipal.iconify)
         ventanaSecundaria = aplicacion.crearNuevaVentana("#F1E8B8")
         aplicacion.insertarImagen(ventanaSecundaria,"Img/numerosPrimos.ppm")
+        boton = aplicacion.ponerBoton(ventanaSecundaria,'Juego',comando=ventanaSecundaria.iconify)
+        boton.configure(state='disabled')
         comandoOpcionCalculadora = partial(AplicacionPrincipal.mostrarCalculadora,self)
         aplicacion.ponerBoton(ventanaSecundaria,'Calculadora',comando=comandoOpcionCalculadora)
-        aplicacion.ponerBoton(ventanaSecundaria,'Juego',comando=ventanaSecundaria.iconify)
         comandoOpcionConceptos = partial(AplicacionPrincipal.mostrarConceptos,self)
         aplicacion.ponerBoton(ventanaSecundaria,'Conceptos',comando=comandoOpcionConceptos)
-        ventanaPrincipal.mainloop()
+
+        if __name__=="__main__":
+            ventanaPrincipal.mainloop()
+        return ventanaPrincipal,ventanaSecundaria
 
     def mostrarCalculadora(self):
         calculadora = interface.Calculadora()
         ventanaCalculadora = calculadora.crearNuevaVentana("#E9B872")
+        inicial = '7'
         botonesCalculadora = ['Es primo','Primos entre 2 numeros','CalcularNprimos']
         comandosCalculadora = [calculadora.activarEsPrimo,calculadora.activarPrimosIntervalo,\
         calculadora.activarCalcularNprimos]
         calculadora.insertarImagen(ventanaCalculadora,nombreImagen="Img/calculadora.ppm")
+        calculadora.entradaCalculadora(ventanaCalculadora,inicial)
         calculadora.crearMenu(ventanaCalculadora,botonesCalculadora,comandosCalculadora)
         return ventanaCalculadora
 
     def mostrarConceptos(self):
         conceptos = interface.Conceptos()
         ventanaConceptos = conceptos.crearNuevaVentana("#E9B872")
-        botonesConceptos = ['Curiosidades','Conjeturas']
-        lista = ['Titulos1','Titulos2']
-        comandoOpcion = partial(conceptos.crearMenuTitulos,lista)
-        comandosConceptos = [comandoOpcion,comandoOpcion]
+        botonesConceptos = ['Curiosidades','Teoremas']
+        listaCuriosidades = ['Descomposicion','Equivalente']
+        comandoCuriosidades = partial(conceptos.crearMenuTitulos,listaCuriosidades)
+        listaConjeturas = ['Fundamental','Eratostenes']
+        comandoConceptos = partial(conceptos.crearMenuTitulos,listaConjeturas)
+        comandosConceptos = [comandoCuriosidades,comandoConceptos]
         conceptos.crearMenu(ventanaConceptos,botonesConceptos,comandosConceptos)
         return ventanaConceptos
 
