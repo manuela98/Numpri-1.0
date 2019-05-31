@@ -91,8 +91,8 @@ class Aplicacion(object):
        self.ventanaError.title("Error")
        self.ventanaError.geometry("350x100+540+284")
        self.ventanaError.config(bg="#F1E8B8")
-       Texto = tk.Label(self.ventanaError,text=mensaje,font='Arial 10 bold', bg="white").place(x=15,y=20)
-       boton = tk.Button(self.ventanaError, text="Entendido!", command=self.ventanaError.destroy,\
+       tk.Label(self.ventanaError,text=mensaje,font='Arial 10 bold', bg="white").place(x=15,y=20)
+       tk.Button(self.ventanaError, text="Entendido!", command=self.ventanaError.destroy,\
        background="#CE0000",font='Arial 11 bold').place(x=140,y=60)
        return self.ventanaError
 
